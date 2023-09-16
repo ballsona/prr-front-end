@@ -1,29 +1,26 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
+
 import {
-  useForm,
   Controller,
   FormProvider,
-  useWatch,
   type SubmitHandler,
+  useForm,
+  useWatch,
 } from 'react-hook-form';
-import { useRouter } from 'next/router';
 
 import { ApiErrorInstance } from '@/apis/API';
 import { FacilityRepository } from '@/apis/facility';
-
-import { COLORS } from '@/constants/styles';
-import { type FacilityFormType, type CategoryType } from '@/constants/types';
-
 import Button from '@/components/common/Button';
-import Text from '@/components/common/Text';
-import NewTextInput from '@/components/common/TextInput/NewTextInput';
 import CategoryTag from '@/components/common/CategoryTag';
-
-import useMeasureBreakpoint from '@/hooks/useMeasureBreakpoint';
+import FormLabel from '@/components/common/FormLabel';
+import NewTextInput from '@/components/common/TextInput/NewTextInput';
+import { COLORS } from '@/constants/styles';
+import { type CategoryType, type FacilityFormType } from '@/constants/types';
 import useDaumPostCode from '@/hooks/useDaumPostCode';
+import useMeasureBreakpoint from '@/hooks/useMeasureBreakpoint';
 import useUploadFile from '@/hooks/useUploadFile';
-
 import FormatUtil from '@/utils/format';
 
 import * as style from './FacilityInfoForm.style';
@@ -132,18 +129,7 @@ const FacilityInfoForm = () => {
     <FormProvider {...formMethods}>
       <style.Wrapper>
         <style.ProjectTypeSelect>
-          <style.FormTitle className="title">
-            <Text fontStyleName="subtitle2B" color={COLORS.grayscale.gray600}>
-              카테고리
-            </Text>
-            <Text
-              fontStyleName="body1B"
-              color={COLORS.caption}
-              className="asterisk"
-            >
-              *
-            </Text>
-          </style.FormTitle>
+          <FormLabel isEssential text="카테고리" className="title" />
           <Controller
             control={control}
             name="category"
@@ -166,18 +152,7 @@ const FacilityInfoForm = () => {
           />
         </style.ProjectTypeSelect>
         <style.FacilityNameForm>
-          <style.FormTitle>
-            <Text fontStyleName="subtitle2B" color={COLORS.grayscale.gray600}>
-              시설 이름
-            </Text>
-            <Text
-              fontStyleName="body1B"
-              color={COLORS.caption}
-              className="asterisk"
-            >
-              *
-            </Text>
-          </style.FormTitle>
+          <FormLabel isEssential text="시설 이름" className="title" />
           <NewTextInput
             name="name"
             rules={{ required: true, minLength: 1 }}
@@ -188,18 +163,7 @@ const FacilityInfoForm = () => {
           />
         </style.FacilityNameForm>
         <style.FacilityLocForm>
-          <style.FormTitle className="title">
-            <Text fontStyleName="subtitle2B" color={COLORS.grayscale.gray600}>
-              시설 위치
-            </Text>
-            <Text
-              fontStyleName="body1B"
-              color={COLORS.caption}
-              className="asterisk"
-            >
-              *
-            </Text>
-          </style.FormTitle>
+          <FormLabel isEssential text="시설 위치" className="title" />
           <NewTextInput
             name="address"
             rules={{ required: true, minLength: 1 }}
@@ -227,18 +191,7 @@ const FacilityInfoForm = () => {
           />
         </style.FacilityLocForm>
         <style.FacilityDocsForm>
-          <style.FormTitle className="title">
-            <Text fontStyleName="subtitle2B" color={COLORS.grayscale.gray600}>
-              증빙 서류
-            </Text>
-            <Text
-              fontStyleName="body1B"
-              color={COLORS.caption}
-              className="asterisk"
-            >
-              *
-            </Text>
-          </style.FormTitle>
+          <FormLabel isEssential text="증빙 서류" className="title" />
           <NewTextInput
             name="certificationDoc"
             rules={{ required: true }}
@@ -280,9 +233,7 @@ const FacilityInfoForm = () => {
           isRound
           isFilled
           themeColor={
-            isPossibleSubmit
-              ? COLORS.primary.greenDefault
-              : COLORS.grayscale.gray400
+            isPossibleSubmit ? COLORS.primary.default : COLORS.grayscale.gray400
           }
           sizeType="large"
           className="bottom-btn"

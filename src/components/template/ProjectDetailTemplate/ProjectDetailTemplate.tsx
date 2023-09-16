@@ -1,6 +1,7 @@
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
+
 import Button from '@/components/common/Button';
 import CategoryTag from '@/components/common/CategoryTag';
 import Text from '@/components/common/Text';
@@ -9,6 +10,7 @@ import { COLORS } from '@/constants/styles';
 import { ProjectContentType, ProjectResponses } from '@/constants/types';
 import useKakaoMap from '@/hooks/useKakaoMap';
 import useMeasureBreakpoint from '@/hooks/useMeasureBreakpoint';
+
 import * as style from './ProjectDetailTemplate.style';
 
 export const CONTENT_MENU: { type: ProjectContentType; label: string }[] = [
@@ -39,7 +41,6 @@ const ProjectDetailTemplate = ({ data }: ProjectDetailTemplateProps) => {
   const [activeMenu, setActiveMenu] = useState<ProjectContentType>('INTRO');
   const mapRef = useKakaoMap(Number(latitude), Number(longitude));
 
-  console.log(mapRef.current);
   const currentBreakpoint = useMeasureBreakpoint();
   const isPC = currentBreakpoint === 'pc';
 
@@ -53,7 +54,11 @@ const ProjectDetailTemplate = ({ data }: ProjectDetailTemplateProps) => {
     switch (activeMenu) {
       case 'INTRO': {
         return (
-          <Text fontStyleName="body1R" color={COLORS.grayscale.gray700}>
+          <Text
+            fontStyleName="body1R"
+            color={COLORS.grayscale.gray700}
+            className="content"
+          >
             {content}
           </Text>
         );
@@ -67,7 +72,7 @@ const ProjectDetailTemplate = ({ data }: ProjectDetailTemplateProps) => {
             <Text
               fontStyleName="body1R"
               color={COLORS.grayscale.gray700}
-              className="cost-content"
+              className="content cost-content"
             >
               {notice ?? '유의사항 없음'}
             </Text>
@@ -77,7 +82,7 @@ const ProjectDetailTemplate = ({ data }: ProjectDetailTemplateProps) => {
             <Text
               fontStyleName="body1R"
               color={COLORS.grayscale.gray700}
-              className="cost-content"
+              className="content cost-content"
             >
               {projectPayment ?? '참가비 없음'}
             </Text>
@@ -86,7 +91,11 @@ const ProjectDetailTemplate = ({ data }: ProjectDetailTemplateProps) => {
       }
       case 'LOCATION': {
         return (
-          <Text fontStyleName="body1R" color={COLORS.grayscale.gray700}>
+          <Text
+            fontStyleName="body1R"
+            color={COLORS.grayscale.gray700}
+            className="content"
+          >
             {guide}
           </Text>
         );
@@ -150,7 +159,7 @@ const ProjectDetailTemplate = ({ data }: ProjectDetailTemplateProps) => {
         </Text>
         <Button
           sizeType="large"
-          themeColor={COLORS.primary.greenDefault}
+          themeColor={COLORS.primary.default}
           isFilled
           onClick={() => router.push('/project/apply')}
         >

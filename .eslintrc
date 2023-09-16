@@ -7,8 +7,8 @@
   "extends": [
     "airbnb",
     "airbnb/hooks",
-    "plugin:@next/next/recommended",
-    "prettier"
+    "prettier",
+    "plugin:@next/next/recommended"
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {

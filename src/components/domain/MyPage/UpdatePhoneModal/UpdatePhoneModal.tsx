@@ -1,21 +1,18 @@
-import { AuthRepository } from '@/apis/auth';
-import { UserRepository } from '@/apis/user';
-
 import {
-  useForm,
   FormProvider,
-  useWatch,
   SubmitHandler,
+  useForm,
+  useWatch,
 } from 'react-hook-form';
 
+import { AuthRepository } from '@/apis/auth';
+import { UserRepository } from '@/apis/user';
 import Button from '@/components/common/Button';
+import ModalTemplate from '@/components/common/ModalTemplate';
 import Text from '@/components/common/Text';
 import NewTextInput from '@/components/common/TextInput/NewTextInput';
-import ModalTemplate from '@/components/common/ModalTemplate';
-
-import { type UserFormType } from '@/constants/types';
 import { COLORS } from '@/constants/styles';
-
+import { type UserFormType } from '@/constants/types';
 import useModal from '@/hooks/useModal';
 import ValidationUtil from '@/utils/validation';
 
@@ -33,12 +30,7 @@ const UpdatePhoneModal = () => {
     },
   });
 
-  const {
-    control,
-    handleSubmit,
-    setError,
-    setValue,
-  } = formMethods;
+  const { control, handleSubmit, setError, setValue } = formMethods;
 
   const [
     changedPhoneNumber,
@@ -132,7 +124,7 @@ const UpdatePhoneModal = () => {
             className="verify-btn"
             themeColor={
               isValidPhoneNumber && !isSendingVerifyNum
-                ? COLORS.primary.greenDefault
+                ? COLORS.primary.default
                 : COLORS.grayscale.gray400
             }
             onClick={sendSmsCertificationNumber}
@@ -153,7 +145,7 @@ const UpdatePhoneModal = () => {
             isFilled
             themeColor={
               isPossibleToConfirm
-                ? COLORS.primary.greenDefault
+                ? COLORS.primary.default
                 : COLORS.grayscale.gray400
             }
             sizeType="small"

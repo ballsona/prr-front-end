@@ -3,6 +3,7 @@ import { CategoryInfo } from '@/constants/project';
 import { COLORS } from '@/constants/styles';
 import { CategoryType } from '@/constants/types';
 import useMeasureBreakpoint from '@/hooks/useMeasureBreakpoint';
+
 import * as style from './CategoryFilter.style';
 
 const CATEGORIES = Object.keys(CategoryInfo) as CategoryType[];
@@ -27,12 +28,12 @@ const CategoryFilter = ({
           <style.Image isActive={c === activeCategory} />
           <Text
             fontStyleName="subtitle2B"
-            color={COLORS.grayscale.gray600}
+            color={COLORS.grayscale.gray700}
             className="title"
           >
             {CategoryInfo[c].title}
           </Text>
-          <Text fontStyleName="body1R" color={COLORS.grayscale.gray600}>
+          <Text fontStyleName="body1R" color={COLORS.grayscale.gray700}>
             {CategoryInfo[c].description}
           </Text>
         </style.FilterItem>
