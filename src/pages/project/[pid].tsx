@@ -1,28 +1,18 @@
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
 
-import { ProjectRepository } from '@/apis/project';
 import ProjectDetailTemplate from '@/components/template/ProjectDetailTemplate';
-import { ProjectResponses } from '@/constants/types';
 
-const ProjectDetail = () => {
-  const router = useRouter();
-  const id = Number(router.query.pid);
+// import AsyncBoundary from '@/components/common/AsyncBoundary';
 
-  const [detailData, setDetailData] = useState<ProjectResponses['detail']>();
+// const ProjectDetailTemplate = dynamic(
+//  () => import('@/components/template/ProjectDetailTemplate'),
+//  { suspense: true },
+// );
 
-  useEffect(() => {
-    const getDetailData = async () => {
-      const { data } = await ProjectRepository.getProjectDetailDataAsync(id);
-      setDetailData(data);
-    };
-
-    if (id) getDetailData();
-  }, [id]);
-
-  if (!detailData) return <>s</>;
-
-  return <ProjectDetailTemplate data={detailData} />;
-};
+const ProjectDetail = () => (
+  // <AsyncBoundary>
+  //  <ProjectDetailTemplate />
+  // </AsyncBoundary>
+  <ProjectDetailTemplate />
+);
 
 export default ProjectDetail;

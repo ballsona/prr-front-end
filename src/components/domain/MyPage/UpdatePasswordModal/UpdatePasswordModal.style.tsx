@@ -1,9 +1,11 @@
-import { MEDIA_QUERIES } from '@/constants/styles';
 import styled from '@emotion/styled';
+
+import { MEDIA_QUERIES } from '@/constants/styles';
 
 export const Wrapper = styled.section`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 30px 0px;
 
   width: 400px;
@@ -14,18 +16,39 @@ export const Wrapper = styled.section`
   }
 
   > input {
+    &:last-child {
+      margin-bottom: 110px;
+    }
+
     @media ${MEDIA_QUERIES.mobile} {
       width: 330px;
     }
   }
 
   > .confirm-btn {
-    grid-area: confirm-btn;
-    margin: 110px auto 0 auto;
     width: 300px;
 
     @media ${MEDIA_QUERIES.mobile} {
-      margin: 65px auto 0 auto;
+      width: 200px;
+    }
+  }
+`;
+
+export const ButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin: 110px auto 0 auto;
+
+  > .feedback {
+    margin-bottom: 16px;
+  }
+
+  > .confirm-btn {
+    width: 300px;
+
+    @media ${MEDIA_QUERIES.mobile} {
       width: 200px;
     }
   }

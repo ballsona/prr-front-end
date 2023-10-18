@@ -1,12 +1,8 @@
-import {
-  CategoryType,
-  ProjectReqParams,
-  ProjectResponses,
-} from '@/constants/types';
+import { ProjectReqParams, ProjectResponses } from '@/constants/types';
 
 import { getAsync, postAsync } from './API';
 
-interface MainProjectListOutput {
+export interface MainProjectListOutput {
   page: number;
   size: number;
   totalPages: number;
@@ -20,10 +16,10 @@ export class ProjectRepository {
    * @param category 필터링할 프로젝트 카테고리 (값을 넘기지 않으면 카테고리와 상관없이 데이터 조회)
    * @returns 검색 타입을 기준으로 정렬되어 있는 총 6개의 프로젝트 목록 데이터
    */
-  static async getMainProjectListAsync(
-    searchType: 'POPULAR' | 'LATEST',
-    category?: CategoryType,
-  ) {
+  static async getMainProjectListAsync({
+    searchType,
+    category,
+  }: ProjectReqParams['main']) {
     const response = await getAsync<MainProjectListOutput>(`/projects`, {
       params: {
         searchType,
@@ -31,7 +27,7 @@ export class ProjectRepository {
         size: 6,
       },
     });
-    return response;
+    return response.data;
   }
 
   /**
@@ -43,7 +39,7 @@ export class ProjectRepository {
     const response = await getAsync<ProjectResponses['detail']>(
       `/projects/${id}`,
     );
-    return response;
+    return response.data;
   }
 
   /**
@@ -121,9 +117,29 @@ export class ProjectRepository {
     const response = await postAsync<any, FormData>('/projects', formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
+        requireToken: true,
       },
     });
 
     return response;
+  }
+
+  /**
+   * 프로젝트 참가 신청을 진행하는 함수 postProjectApplyAsync
+   * @param projectId 참가 신청을 진행할 프로젝트의 ID
+   * @returns 성공 시 204, 실패 시 40X 혹은 500 에러 return
+   */
+  static async postProjectApplyAsync(projectId: number) {
+    const response = await postAsync<void, undefined>(
+      `/projects/${projectId}/apply`,
+      undefined,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          requireToken: true,
+        },
+      },
+    );
+    return response.data;
   }
 }

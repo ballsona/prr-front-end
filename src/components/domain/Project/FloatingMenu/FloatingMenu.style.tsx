@@ -1,5 +1,6 @@
-import { COLORS } from '@/constants/styles';
 import styled from '@emotion/styled';
+
+import { COLORS } from '@/constants/styles';
 
 export const Wrapper = styled.div`
   width: 100%;
@@ -42,4 +43,5 @@ export const MenuField = styled.div`
   display: flex;
   align-items: center;
   gap: 5px;
+  cursor: pointer;
 `;

@@ -1,3 +1,4 @@
+import { NEXT_SERVER_URL } from '@/constants/apis';
 import {
   ApiResponse,
   AuthReqParams,
@@ -106,59 +107,39 @@ export class AuthRepository {
    * Next Api Route를 통해 프론트 서버에 저장되었던 JWT 토큰을 가져오는 함수 getJwtCookieAsync
    */
   static async getJwtCookieAsync() {
-    const response = await fetch('/api/token', {
+    const hostUrl = NEXT_SERVER_URL[process.env.NODE_ENV];
+    const response = await fetch(`${hostUrl}/api/token`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
       },
     });
-    const {
-      data: { accessToken, refreshToken },
-    } = (await response.json()) as ApiResponse<AuthResponses['login']>;
-    return { accessToken, refreshToken };
+    const { data: { accessToken } = {} } =
+      (await response.json()) as ApiResponse<AuthResponses['login']>;
+    return accessToken;
   }
 
   /**
    * 토큰 갱신이 필요할 시 First-Site Cookie를 세팅하는 함수 setJwtCookieAsync
    * @param param.accessToken 서버로부터 받은 엑세스 토큰
-   * @param param.refreshToken 서버로부터 받은 리프레시 토큰
    */
-  static async setJwtCookieAsync({
-    accessToken,
-    refreshToken,
-  }: AuthReqParams['jwt']) {
-    await fetch('/api/token', {
+  static async setJwtCookieAsync(accessToken: string) {
+    const hostUrl = NEXT_SERVER_URL[process.env.NODE_ENV];
+    await fetch(`${hostUrl}/api/token`, {
       method: 'POST',
-      body: JSON.stringify({ accessToken, refreshToken }),
+      body: JSON.stringify({ accessToken }),
       headers: {
         'Content-type': 'application/json',
       },
     });
-  }
-
-  /**
-   * 리프레시 토큰을 사용하여 서버로부터 새로운 JWT 를 받아오는 함수 refreshJwtCookieAsync
-   * @param refreshToken 토큰 재발급을 위해 필요한 refresh token
-   * @returns
-   */
-  static async refreshJwtCookieAsync(refreshToken: string) {
-    const response = await postAsync<AuthResponses['login'], null>(
-      '/users/login',
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${refreshToken}`,
-        },
-      },
-    );
-    return response;
   }
 
   /**
    * 서버로부터 받았던 JWT 를 보관한 Cookie를 삭제하는 함수 removeJwtCookieAsync
    */
   static async removeJwtCookieAsync() {
-    await fetch('/api/token', {
+    const hostUrl = NEXT_SERVER_URL[process.env.NODE_ENV];
+    await fetch(`${hostUrl}/api/token`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

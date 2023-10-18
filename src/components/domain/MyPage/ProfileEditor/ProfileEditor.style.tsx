@@ -1,11 +1,11 @@
-import { COLORS, MEDIA_QUERIES } from '@/constants/styles';
 import styled from '@emotion/styled';
+
+import { COLORS, MEDIA_QUERIES } from '@/constants/styles';
 
 export const Wrapper = styled.section`
   display: flex;
   gap: 0px 30px;
 
-  width: 415px;
   margin-right: auto;
 
   @media ${MEDIA_QUERIES.mobile} {
@@ -17,9 +17,9 @@ export const Wrapper = styled.section`
 export const Section = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px 0px;
+  gap: 16px 0;
 
-  margin: 13px 0px 13px auto;
+  margin: 13px auto 13px 0;
 
   @media ${MEDIA_QUERIES.mobile} {
     margin: 0;
